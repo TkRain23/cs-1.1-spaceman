@@ -6,8 +6,63 @@ intro = '''
  _____ _____ _____ _____ _____ _____ _____ _____
 |   __|  _  |  _  |     |   __|     |  _  |   | |
 |__   |   __|     |   --|   __| | | |     | | | |
-|_____|__|  |__|__|_____|_____|_|_|_|__|__|_|___|
+|_____|__|  |__|__|_____|_____|_|_|_|__|__|_|___| - TK
          '''
+
+miss_one = '''
+|/||\\|
+         '''
+miss_two = '''
+|:||:|
+|/||\\|
+         '''
+miss_three = '''
+/:||:\\
+|:||:|
+|/||\\|
+         '''
+miss_four = '''
+ /||\\
+/:||:\\
+|:||:|
+|/||\\|
+         '''
+miss_five = '''
+  ||
+ /||\\
+/:||:\\
+|:||:|
+|/||\\|
+         '''
+miss_six = '''
+  ||
+  ||
+ /||\\
+/:||:\\
+|:||:|
+|/||\\|
+         '''
+miss_seven = '''
+  /\\
+  ||
+  ||
+ /||\\
+/:||:\\
+|:||:|
+|/||\\|
+  **
+  **           SEE YOU SPACE COWBOY
+         '''
+
+win_message = '''
+                       .-.
+        .-""`""-.    |(@ @)   YOU WIN!
+     _/`oOoOoOoOo`\\_ \\ \\-/
+    '.-=-=-=-=-=-=-.' \\/ \\
+      `-=.=-.-=.=-'    \\ /\\
+         ^  ^  ^       _H_
+         '''
+
 
 def user_input(prompt):
     user_input = input(prompt)
@@ -41,15 +96,17 @@ def display_board(secret_word):
 
 def update_board(secret_word, guessed_characters):
     blank_tiles = ["_"] * len(list(secret_word))
+    board_comparer = []
     solution_tiles = list(secret_word)
     for i, x in enumerate(solution_tiles):
         if x in guessed_characters:
             blank_tiles[i] = x
     for letter in blank_tiles:
+        os.system('clear')
         print(letter, end=' ')
+        board_comparer.append(letter)
     print(' ')
-
-    if "_" not in letter:
+    if "_" not in board_comparer:
         return True
     else:
         return False
@@ -57,38 +114,58 @@ def update_board(secret_word, guessed_characters):
 
 def start_guessing(secret_word):
     guessed_characters = []
-    incorrect_guess = 1
+    incorrect_guess = 0
     while incorrect_guess < 8:
         characters = input("Enter a character: ").lower()
         guessed_characters.append(characters)
+        os.system('clear')
         if characters in secret_word:
+            os.system('clear')
             if update_board(secret_word, guessed_characters):
-                print("You Win")
+                os.system('clear')
+                print(win_message)
+                selection = user_input("Press 'A' to play again, Press 'Q' to quit. \n")
+                spaceman(selection)
                 return
 
         else:
-            print("Wrong, Try Again: {}/7".format(incorrect_guess))
+            os.system('clear')
             incorrect_guess += 1
-            if incorrect_guess == 8:
+            if incorrect_guess == 1:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_one)
+            if incorrect_guess == 2:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_two)
+            if incorrect_guess == 3:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_three)
+            if incorrect_guess == 4:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_four)
+            if incorrect_guess == 5:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_five)
+            if incorrect_guess == 6:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_six)
+            if incorrect_guess == 7:
+                os.system('clear')
+                print("Wrong, Try Again: {}/7".format(incorrect_guess))
+                print(miss_seven)
+                print("The word was: {}".format(secret_word))
                 selection = user_input("Game Over: Press 'A' to try again, Press 'Q' to quit. \n")
                 spaceman(selection)
 
-    """
-    if user input matches any part of the string (secret word)
-    display that word. in the dispplay block.
-
-    otherwise return error message + increment error count by 1
-    if error count reaches 7, end game + give option to restart
-
-    if user enters same character, prompt user to enter a different one
-
-    only take in single characters, no strings, no digits.
-
-    """
-
 
 def start_game(secret_word):
-    print("Your secret word contains {} characters.".format(len(secret_word)))
+    print("Your secret word contains '{}' characters.".format(len(secret_word)))
     print("Guess one letter per round -- good luck!")
     display_board(secret_word)
     start_guessing(secret_word)
